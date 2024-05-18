@@ -21,3 +21,9 @@ npm i
 npm run dev
 
 Check http://localhost:3000/ in your browser to see UI
+
+### Environment Variable
+
+Create a .env file
+Add PORT=<your port number>
+Add DATABASE_URL=<connection string> @Ikenna will share connection string in discord

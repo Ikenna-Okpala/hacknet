@@ -5,27 +5,30 @@ import LoginButton from "../components/login-button";
 import axios from "axios";
 import { UserContext } from "../contexts/user-context";
 import { useUser } from "../hooks/hooks";
-import { LOGIN_ENDPOINT } from "../utils/constants";
+import { LOGIN_ENDPOINT, SIGNUP_ENDPOINT } from "../utils/constants";
+import SignupButton from "../components/signup-button";
 
 type Form = {
   username: string;
   password: string;
+  confirmPassword: string;
 };
 
 type User = {
   username: string;
   memberSince: string;
 };
-export default function Login() {
+export default function Signup() {
   const [form, setForm] = useState<Form>({
     username: "",
     password: "",
+    confirmPassword: "",
   });
 
   const { user, updateUser } = useUser();
 
-  const onLogin = async () => {
-    const resp = await axios.post(LOGIN_ENDPOINT, form);
+  const onSignup = async () => {
+    const resp = await axios.post(SIGNUP_ENDPOINT, form);
 
     const user: User = {
       username: resp.data.username,
@@ -60,7 +63,18 @@ export default function Login() {
         className="outline-none bg-till-green w-64 h-12 rounded-md placeholder-nice-yellow px-2 caret-nice-yellow focus:placeholder-transparent text-nice-yellow"
       ></input>
 
-      <LoginButton width={150} height={50} onClick={onLogin} />
+      <input
+        type="text"
+        name="password"
+        value={form.confirmPassword}
+        onChange={(e) => {
+          setForm({ ...form, confirmPassword: e.target.value });
+        }}
+        placeholder="Confirm Password"
+        className="outline-none bg-till-green w-64 h-12 rounded-md placeholder-nice-yellow px-2 caret-nice-yellow focus:placeholder-transparent text-nice-yellow"
+      ></input>
+
+      <SignupButton width={150} height={50} onClick={onSignup} />
     </form>
   );
 }

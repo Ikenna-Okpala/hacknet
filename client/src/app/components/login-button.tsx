@@ -1,10 +1,13 @@
+"use client";
+
 import Image from "next/image";
 
 type Props = {
   width: number;
   height: number;
+  onClick: () => void;
 };
-export default function LoginButton({ width, height }: Props) {
+export default function LoginButton({ width, height, onClick }: Props) {
   return (
     <div className="flex flex-row justify-evenly w-full">
       <Image
@@ -13,6 +16,7 @@ export default function LoginButton({ width, height }: Props) {
         priority
         width={width}
         height={height}
+        onClick={onClick}
       />
     </div>
   );

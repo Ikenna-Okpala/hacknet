@@ -23,7 +23,7 @@ const Popup: FC<PopupProps> = ({isOpen, onClose, children}) => {
                     width: '40%',
                     height: '40%',
                     margin: 'auto',
-                    backgroundColor: 'grey',
+                    backgroundColor: 'purple',
                     border: '1px solid black',
                     borderRadius: '5px',
                     display: 'flex',

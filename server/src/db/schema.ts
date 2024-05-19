@@ -53,6 +53,22 @@ export const user_profiles = pgTable("user_profiles", {
 }),
 );
 
+export const badges = pgTable("badges", {
+  id: serial("id").notNull().primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  icon: text("icon"),
+});
+
+export const user_badges = pgTable("user_badges", {
+  user_id: serial("user_id").notNull().references(() => users.id),
+  badge_id: serial("badge_id").notNull().references(() => badges.id),
+},
+(t) => ({
+  pk: primaryKey({columns: [t.user_id, t.badge_id] }),
+}),
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
   participant_to_hackathon: many(participant_to_hackathon),
 }));

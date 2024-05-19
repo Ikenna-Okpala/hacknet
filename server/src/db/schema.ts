@@ -8,7 +8,6 @@ export const users = pgTable("users", {
   number_of_hackathons: integer("number_of_hackathons").notNull(), //to be initialized to 0
   member_since: timestamp("member_since").notNull(),
   isJudge: boolean("is_judge").default(false),
-  jobStatus: text("job_status").default("Student"),
   profilePicture: text("profile_picture").default("Profile grey.png"),
 });
 
@@ -26,7 +25,7 @@ export const hackathons = pgTable("hackathons", {
 
 export const friendslist = pgTable("friendslist", {
   user_id: serial("user_id").notNull().references(() => users.id),
-  friend_id: serial("friend_id").notNull().references(() => users.id),
+  friend_id: serial("friend_id").references(() => users.id),
 },
 (t) => ({
   pk: primaryKey({columns: [t.user_id, t.friend_id] }),
@@ -46,6 +45,7 @@ export const user_profiles = pgTable("user_profiles", {
   id: serial("id").notNull().primaryKey(),
   favorite_project: text("favorite_project"),
   bio: text("bio"),
+  jobStatus: text("job_status"),
   user_id: serial("user_id").notNull().references(() => users.id),
 },
 (t) => ({
@@ -76,7 +76,6 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const hackathonRelations = relations(hackathons, ({many}) => ({
   participant_to_hackathon: many(participant_to_hackathon),
 }));
-
 
 export const participant_to_hackathon = pgTable("participant_to_hackathon", {
   userId: smallint("userId").notNull().references(() => users.id),

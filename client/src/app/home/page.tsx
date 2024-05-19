@@ -1,14 +1,37 @@
 "use client";
+import exp from 'constants';
 import Image from 'next/image';
 import React from 'react';
+//import {getRepository} from 'typeorm';
+import {hackathons} from '../../../../server/src/db/schema';
+import { start } from 'repl';
+//import { insert } from 'drizzle-orm';
+import db from '../../../../server/src/db/db.config';
 
 export default function Home() {
     const handleProfileClick = () => {
         console.log("Profile button clicked");
     }
 
+    const [loading, setLoading] = React.useState(false);
+
+    const listOfThemes = ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5", "Theme 6", "Theme 7", "Theme 8", "Theme 9", "Theme 10"];
     // create custom functions for the other buttons
 
+    async function handleJoinAHackathonClick() {
+        console.log("Join a Hackathon button clicked");
+        setLoading(true);
+        const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
+        await db.insert(hackathons).values({
+            theme : selectedTheme,
+            startTime : new Date(),
+            endTime : new Date(),
+            max_participants : 10,
+            experience_level : 'Beginner',
+        }).returning();
+        setLoading(false);
+        console.log("Hackathon created");
+    }
 
     return (
         <main className="min-h-screen bg-white flex flex-col items-center justify-center relative">
@@ -36,7 +59,7 @@ export default function Home() {
           </nav>
           <nav className="flex flex-col items-center space-y-8">
             <Image src="/animations/SquirrelAnimation.gif" alt="Fun background animation" width={400} height={300} />
-            <button className="p-0 border-none bg-none">
+            <button className="p-0 border-none bg-none" onClick={handleJoinAHackathonClick}>
               <Image src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
             </button>
           </nav>

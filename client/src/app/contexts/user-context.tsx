@@ -1,8 +1,8 @@
 import { createContext, useState } from "react";
 
 export type User = {
-  username: string;
-  memberSince: string;
+  id: string;
+  member_since: string;
 };
 
 type UserContext = {
@@ -14,8 +14,8 @@ export const UserContext = createContext<UserContext | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User>({
-    username: "",
-    memberSince: "",
+    id: "",
+    member_since: "",
   });
 
   const updateUser = (user: User) => {

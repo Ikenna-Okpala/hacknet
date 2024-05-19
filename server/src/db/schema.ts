@@ -23,17 +23,20 @@ export const users = pgTable("users", {
   profilePicture: text("profile_picture").default("Profile grey.png"),
 });
 
-// export const hackathons = pgTable("hackathons", {
-//   id: serial("id").notNull().primaryKey(),
-//   theme: text("theme").notNull().notNull(),
-//   startTime: timestamp("start_time").notNull(),
-//   endTime: timestamp("end_time").notNull(),
-//   max_participants: smallint("max_participants"),
-//   experience_level: text("experience_level"),
-//   first_place: text("first_place"),
-//   second_place: text("second_place"),
-//   third_place: text("third_place"),
-// });
+export const hackathons = pgTable("hackathons", {
+  id: serial("id").notNull().primaryKey(),
+  theme: text("theme"),
+  name: varchar("name", { length: 36 }).notNull(),
+  startTime: timestamp("start_time"),
+  endTime: timestamp("end_time"),
+  max_participants: smallint("max_participants"),
+  experience_level: text("experience_level", {
+    enum: ["beginner", "intermediate", "advanced"],
+  }),
+  first_place: text("first_place"),
+  second_place: text("second_place"),
+  third_place: text("third_place"),
+});
 
 export const friendslist = pgTable(
   "friendslist",

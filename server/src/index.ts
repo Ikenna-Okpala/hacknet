@@ -5,6 +5,7 @@ import cors from "cors";
 
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.route";
+import hackathonRouter from "./routes/hackathon.route";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.get("/healthcheck", (req: Request, res: Response) => {
 });
 
 app.use("/api/users", userRouter);
+app.use("/api/hackathons", hackathonRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port:${port}`);

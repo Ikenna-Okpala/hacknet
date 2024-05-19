@@ -8,6 +8,7 @@ import { Request, Response } from "express";
 import db from "../db/db.config";
 import { users } from "../db/schema";
 import { eq } from "drizzle-orm";
+
 export const createUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
 
@@ -24,7 +25,9 @@ export const createUser = async (req: Request, res: Response) => {
       .insert(users)
       .values({
         username,
-        memberSince: new Date(),
+        email,
+        number_of_hackathons: 0,
+        member_since: new Date(),
       })
       .returning();
 

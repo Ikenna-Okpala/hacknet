@@ -2,11 +2,14 @@
 import exp from 'constants';
 import Image from 'next/image';
 import React from 'react';
+import axios from 'axios';
+import Popup from '../styles/popup';
 //import {getRepository} from 'typeorm';
 import {hackathons} from '../../../../server/src/db/schema';
 import { start } from 'repl';
 //import { insert } from 'drizzle-orm';
 import db from '../../../../server/src/db/db.config';
+import { HACKATHON_CREATE } from '../utils/constants';
 
 export default function Home() {
     const handleProfileClick = () => {
@@ -14,23 +17,30 @@ export default function Home() {
     }
 
     const [loading, setLoading] = React.useState(false);
+    const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
     const listOfThemes = ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5", "Theme 6", "Theme 7", "Theme 8", "Theme 9", "Theme 10"];
     // create custom functions for the other buttons
 
     async function handleJoinAHackathonClick() {
         console.log("Join a Hackathon button clicked");
+        setIsPopupOpen(true);
         setLoading(true);
-        const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
-        await db.insert(hackathons).values({
-            theme : selectedTheme,
-            startTime : new Date(),
-            endTime : new Date(),
-            max_participants : 10,
-            experience_level : 'Beginner',
-        }).returning();
+        // const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
+        // const data = {
+        //     theme : selectedTheme,
+        //     startTime : new Date(),
+        //     endTime : new Date(),
+        //     max_participants : 10,
+        //     experience_level : 'Beginner',
+        // }
+        // await axios.post(HACKATHON_CREATE, data)
         setLoading(false);
         console.log("Hackathon created");
+    }
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false);
     }
 
     return (
@@ -62,15 +72,11 @@ export default function Home() {
             <button className="p-0 border-none bg-none" onClick={handleJoinAHackathonClick}>
               <Image src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
             </button>
+            <Popup isOpen={isPopupOpen} onClose={handleClosePopup} />
           </nav>
           <nav className="absolute bottom-4 left-4">
             <button className="p-0 border-none bg-none">
               <Image src="/images/buttons/judgeahackathon.png" alt="Judge A Hackathon" width={192} height={64} />
-            </button>
-          </nav>
-          <nav className="absolute bottom-4 right-4">
-            <button className="p-0 border-none bg-none">
-              <Image src="/images/buttons/setting.png" alt="Settings" width={192} height={64} />
             </button>
           </nav>
         </main>

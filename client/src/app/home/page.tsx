@@ -76,6 +76,10 @@ export default function Home() {
         setQueuePopUpOpen(false);
     }, []);
 
+    const handleClosePartyInvitePopUp = useCallback(() => {
+        setPartyInvitePopUpOpen(false);
+    }, []);
+
 
 
     return (
@@ -100,7 +104,7 @@ export default function Home() {
             <div className="text-black">x</div>
             <div className="text-black">y</div>
             <div className="text-black">z</div>
-            <button className="p-0 border-none bg-none">
+            <button className="p-0 border-none bg-none" onClick={handlePartyInvitePopUp}>
               <Image src="/images/buttons/invite.png" alt="Invite" width={64} height={64} />
             </button>
             <Popup isOpen={isPartyInvitePopUpOpen} onClose={handlePartyInvitePopUp}> 
@@ -115,7 +119,7 @@ export default function Home() {
             <button className="p-0 border-none bg-none" onClick={handleJoinAHackathonClick}>
               <Image src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
             </button>
-            <Popup isOpen={isQueuePopUpOpen} onClose={handleCloseQueuePopUp}>
+            <Popup isOpen={isQueuePopUpOpen} onClose={handleClosePartyInvitePopUp}>
               <HackathonQueuePopUp />
             </Popup>
           </nav>

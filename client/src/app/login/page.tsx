@@ -6,6 +6,7 @@ import axios from "axios";
 import { UserContext } from "../contexts/user-context";
 import { useUser } from "../hooks/hooks";
 import { LOGIN_ENDPOINT } from "../utils/constants";
+import Link from "next/link";
 
 type Form = {
   username: string;
@@ -33,6 +34,7 @@ export default function Login() {
     };
 
     updateUser(user);
+
   };
   return (
     <form className="flex flex-col justify-center items-center space-y-3 w-screen h-screen">
@@ -59,8 +61,9 @@ export default function Login() {
         placeholder="Password"
         className="outline-none bg-till-green w-64 h-12 rounded-md placeholder-nice-yellow px-2 caret-nice-yellow focus:placeholder-transparent text-nice-yellow"
       ></input>
-
-      <LoginButton width={150} height={50} onClick={onLogin} />
+      <Link href={"/loading"}>
+        <LoginButton width={150} height={50} onClick={onLogin} />
+      </Link>
     </form>
   );
 }

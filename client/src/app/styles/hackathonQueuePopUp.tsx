@@ -1,7 +1,7 @@
 import ReactModal from 'react-modal';
 import React, {FC} from 'react';
 
-const HackathonQueueForm = () => {
+const HackathonQueuePopUp = () => {
     const [num_hackers, setNumHackers] = React.useState(0);
     const [length, setLength] = React.useState(0);
     const [experience_level, setExperience] = React.useState('');
@@ -27,3 +27,5 @@ const HackathonQueueForm = () => {
         </form>
     );
 };
+
+export default HackathonQueuePopUp;

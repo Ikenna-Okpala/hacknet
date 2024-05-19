@@ -1,9 +1,12 @@
 "use client";
 import exp from 'constants';
 import Image from 'next/image';
-import React from 'react';
+import React, { useCallback } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Popup from '../styles/popup';
+import PartyQueue from '../styles/partyQueue';
+import HackathonQueuePopUp from '../styles/hackathonQueuePopUp';
 //import {getRepository} from 'typeorm';
 import {hackathons} from '../../../../server/src/db/schema';
 import { start } from 'repl';
@@ -17,14 +20,16 @@ export default function Home() {
     }
 
     const [loading, setLoading] = React.useState(false);
-    const [isPopupOpen, setIsPopupOpen] = React.useState(false);
 
-    const listOfThemes = ["Theme 1", "Theme 2", "Theme 3", "Theme 4", "Theme 5", "Theme 6", "Theme 7", "Theme 8", "Theme 9", "Theme 10"];
+    const [isQueuePopUpOpen, setQueuePopUpOpen] = React.useState(false);
+    const [isPartyInvitePopUpOpen, setPartyInvitePopUpOpen] = React.useState(false);
+
+    const listOfThemes = ["Chaos", "Magic", "Chicken", "Cooked", "Global Cooling", "In the Air", "Deep Breath", "Aqua", "20's", "Medicine"];
     // create custom functions for the other buttons
 
     async function handleJoinAHackathonClick() {
         console.log("Join a Hackathon button clicked");
-        setIsPopupOpen(true);
+        setQueuePopUpOpen(true);
         setLoading(true);
         // const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
         // const data = {
@@ -39,21 +44,33 @@ export default function Home() {
         console.log("Hackathon created");
     }
 
-    const handleClosePopup = () => {
-        setIsPopupOpen(false);
-    }
+    async function handlePartyInvitePopUp() {
+      console.log("Party Invite button clicked");
+      setPartyInvitePopUpOpen(true);
+  }
+
+    const handleCloseQueuePopUp = useCallback(() => {
+        setQueuePopUpOpen(false);
+    }, []);
+
+
 
     return (
-        <main className="flex flex-col justify-between items-center w-screen h-screen pt-12 pb-16">
+        <main className="flex flex-col justify-between items-center w-screen h-screen pt-12 pb-16"
+          style={({
+            backgroundImage: '/images/backgrounds/Cloudbackgroundanimation.gif',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          })}>
           <nav className="absolute top-4 left-4">
             <button className="p-0 border-none bg-none">
               <Image src="/images/profile_icon/Profile1.png" alt="Profile" width={64} height={64} />
             </button>
           </nav>
           <nav className="absolute top-4 right-4">
-            <button className="p-0 border-none bg-none">
+            <Link to="/user/friends">
               <Image src="/images/buttons/connections.png" alt="Connections" width={64} height={64} />
-            </button>
+            </Link>
           </nav>
           <nav className="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col items-end space-y-2">
             <div className="text-black">Party:</div>
@@ -63,6 +80,9 @@ export default function Home() {
             <button className="p-0 border-none bg-none">
               <Image src="/images/buttons/invite.png" alt="Invite" width={64} height={64} />
             </button>
+            <Popup isOpen={isPartyInvitePopUpOpen} onClose={handlePartyInvitePopUp}> 
+              <PartyQueue />
+            </Popup>
             <button className="p-0 border-none bg-none">
               <Image src="/images/buttons/disband.png" alt="Disband" width={64} height={64} />
             </button>
@@ -72,7 +92,9 @@ export default function Home() {
             <button className="p-0 border-none bg-none" onClick={handleJoinAHackathonClick}>
               <Image src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
             </button>
-            <Popup isOpen={isPopupOpen} onClose={handleClosePopup} />
+            <Popup isOpen={isQueuePopUpOpen} onClose={handleCloseQueuePopUp}>
+              <HackathonQueuePopUp />
+            </Popup>
           </nav>
           <nav className="absolute bottom-4 left-4">
             <button className="p-0 border-none bg-none">

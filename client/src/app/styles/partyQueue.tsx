@@ -1,7 +1,7 @@
 import ReactModal from 'react-modal';
 import React, {FC} from 'react';
 
-const HackathonQueueForm = () => {
+const PartyQueue = () => {
     //
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -12,3 +12,5 @@ const HackathonQueueForm = () => {
         </form>
     );
 };
+
+export default PartyQueue;

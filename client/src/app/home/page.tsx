@@ -14,6 +14,8 @@ import { start } from 'repl';
 import db from '../../../../server/src/db/db.config';
 import { HACKATHON_CREATE } from '../utils/constants';
 import FileDownload from 'js-file-download';
+import Link from "next/link";
+
 
 export default function Home() {
 
@@ -94,11 +96,16 @@ export default function Home() {
               <Image src="/images/profile_icon/Profile1.png" alt="Profile" width={64} height={64} />
             </button>
           </nav>
+
+          {/* jacki did this so if smths wrong it's here lol */}
           <nav className="absolute top-4 right-4">
+          <Link href={"/friendlist"}>
           <button className="p-0 border-none bg-none">
               <Image src="/images/buttons/connections.png" alt="Connections" width={64} height={64} />
             </button>
+          </Link>
           </nav>
+
           <nav className="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col items-end space-y-2">
             <div className="text-black">Party:</div>
             <div className="text-black">x</div>

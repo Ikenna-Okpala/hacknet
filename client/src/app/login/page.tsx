@@ -13,8 +13,8 @@ type Form = {
 };
 
 type User = {
-  username: string;
-  memberSince: string;
+  id: string;
+  member_since: string;
 };
 export default function Login() {
   const [form, setForm] = useState<Form>({
@@ -28,8 +28,8 @@ export default function Login() {
     const resp = await axios.post(LOGIN_ENDPOINT, form);
 
     const user: User = {
-      username: resp.data.username,
-      memberSince: resp.data.memberSince,
+      id: resp.data.id,
+      member_since: resp.data.member_since,
     };
 
     updateUser(user);

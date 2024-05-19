@@ -16,8 +16,8 @@ type Form = {
 };
 
 type User = {
-  username: string;
-  memberSince: string;
+  id: string;
+  member_since: string;
 };
 export default function Signup() {
   const [form, setForm] = useState<Form>({
@@ -29,12 +29,14 @@ export default function Signup() {
 
   const { user, updateUser } = useUser();
 
+  const id = user.id;
+
   const onSignup = async () => {
     const resp = await axios.post(SIGNUP_ENDPOINT, form);
 
     const user: User = {
-      username: resp.data.username,
-      memberSince: resp.data.memberSince,
+      id: resp.data.id,
+      member_since: resp.data.member_since,
     };
 
     updateUser(user);

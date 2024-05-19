@@ -8,6 +8,7 @@ import { getAnalytics } from "firebase/analytics";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 import dotenv from "dotenv";
+import { getAuth } from "firebase/auth";
 
 dotenv.config();
 
@@ -25,4 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
-export default app;
+const auth = getAuth(app);
+
+export default auth;

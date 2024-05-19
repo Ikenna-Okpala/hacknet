@@ -11,6 +11,7 @@ import SignupButton from "../components/signup-button";
 type Form = {
   username: string;
   password: string;
+  email: string;
   confirmPassword: string;
 };
 
@@ -22,6 +23,7 @@ export default function Signup() {
   const [form, setForm] = useState<Form>({
     username: "",
     password: "",
+    email: "",
     confirmPassword: "",
   });
 
@@ -54,6 +56,19 @@ export default function Signup() {
       ></input>
       <input
         type="text"
+        name="email"
+        value={form.email}
+        onChange={(e) => {
+          setForm({
+            ...form,
+            email: e.target.value,
+          });
+        }}
+        placeholder="Email"
+        className="outline-none bg-till-green w-64 h-12 rounded-md placeholder-nice-yellow px-2 caret-nice-yellow focus:placeholder-transparent text-nice-yellow"
+      ></input>
+      <input
+        type="password"
         name="password"
         value={form.password}
         onChange={(e) => {
@@ -64,7 +79,7 @@ export default function Signup() {
       ></input>
 
       <input
-        type="text"
+        type="password"
         name="password"
         value={form.confirmPassword}
         onChange={(e) => {

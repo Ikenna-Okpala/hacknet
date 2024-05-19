@@ -38,7 +38,7 @@ export default function Login() {
     <form className="flex flex-col justify-center items-center space-y-3 w-screen h-screen">
       <input
         type="text"
-        name="username"
+        name="email"
         value={form.username}
         onChange={(e) => {
           setForm({
@@ -46,11 +46,11 @@ export default function Login() {
             username: e.target.value,
           });
         }}
-        placeholder="Username"
+        placeholder="Email"
         className="outline-none bg-till-green w-64 h-12 rounded-md placeholder-nice-yellow px-2 caret-nice-yellow focus:placeholder-transparent text-nice-yellow"
       ></input>
       <input
-        type="text"
+        type="password"
         name="password"
         value={form.password}
         onChange={(e) => {

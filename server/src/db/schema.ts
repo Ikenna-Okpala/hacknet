@@ -2,20 +2,20 @@ import { relations } from "drizzle-orm";
 import { pgTable, primaryKey, serial, text, timestamp, smallint, boolean, integer } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  name: text("name"),
-  email: text("email"),
-  number_of_hackathons: integer("number_of_hackathons"),
-  member_since: timestamp("member_since"),
-  isJudge: boolean("is_judge").default(false),
+  id: serial("id").notNull().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  number_of_hackathons: integer("number_of_hackathons").notNull(), //to be initialized to 0
+  member_since: timestamp("member_since").notNull(),
+  isJudge: boolean("is_judge").notNull().default(false),
   jobStatus: text("job_status").default("Student"),
 });
 
 export const hackathons = pgTable("hackathons", {
-  id: serial("id").primaryKey(),
-  theme: text("theme"),
-  startTime: timestamp("start_time"),
-  endTime: timestamp("end_time"),
+  id: serial("id").notNull().primaryKey(),
+  theme: text("theme").notNull().notNull(),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
   max_participants: smallint("max_participants"),
   experience_level: text("experience_level"),
   first_place: text("first_place"),
@@ -33,8 +33,8 @@ export const friendslist = pgTable("friendslist", {
 );
 
 export const friend_request_list = pgTable("friend_requests", {
-  sender_id: serial("sender_id").notNull().references(() => users.id),
-  receiver_id: serial("receiver_id").notNull().references(() => users.id),
+  sender_id: serial("sender_id").references(() => users.id),
+  receiver_id: serial("receiver_id").references(() => users.id),
 },
 (t) => ({
   pk: primaryKey({columns: [t.sender_id, t.receiver_id] }),
@@ -42,7 +42,7 @@ export const friend_request_list = pgTable("friend_requests", {
 );
 
 export const user_profiles = pgTable("user_profiles", {
-  id: serial("id").primaryKey(),
+  id: serial("id").notNull().primaryKey(),
   favorite_project: text("favorite_project"),
   bio: text("bio"),
   user_id: serial("user_id").notNull().references(() => users.id),

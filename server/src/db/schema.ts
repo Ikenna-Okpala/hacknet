@@ -19,7 +19,6 @@ export const users = pgTable("users", {
   number_of_hackathons: integer("number_of_hackathons").default(0), //to be initialized to 0
   member_since: timestamp("member_since", { mode: "date" }).notNull(),
   isJudge: boolean("is_judge").default(false),
-  jobStatus: text("job_status").default("Student"),
   profilePicture: text("profile_picture").default("Profile grey.png"),
 });
 

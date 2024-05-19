@@ -43,3 +43,26 @@ export const addFriends = async (req: Request, res: Response) => {
     res.status(404).json({ error: "Something went wrong" });
   }
 };
+
+// export const deleteFriend = async (req: Request, res: Response) => {
+//   try {
+//     const user_id: string = req.params.id;
+
+//     const friend_id: string = req.body.friend_id;
+
+//     await db.delete(friendslist).where(
+//       eq(friendslist.user_id, user_id),
+//       eq(friendslist.friend_id, friend_id)
+//     );
+
+//     await db.delete(friendslist).where(
+//       eq(friendslist.user_id, friend_id),
+//       eq(friendslist.friend_id, user_id)
+//     );
+
+//     res.status(200).end();
+//   } catch (error) {
+//     console.log(error);
+//     res.status(404).json({ error: "Something went wrong" });
+//   }
+// }

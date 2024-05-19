@@ -12,6 +12,8 @@ import { v4 } from "uuid";
 export const createUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
+  console.log(email);
+  
   try {
     const userFirebase = await createUserWithEmailAndPassword(
       auth,

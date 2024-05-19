@@ -16,10 +16,6 @@ export default async function FriendList() {
                     <Image src="/connections.png" alt="Back" width={64} height={64} />
                 </button>
             </nav>
-            <nav className=>
-
-            </nav>
-
         </main>
     );
 }

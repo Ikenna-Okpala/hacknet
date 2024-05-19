@@ -8,10 +8,9 @@ import { Request, Response } from "express";
 import db from "../db/db.config";
 import { users } from "../db/schema";
 import { eq } from "drizzle-orm";
+import { v4 } from "uuid";
 export const createUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-
-  const email = `${username}@gmail.com`;
+  const { username, email, password } = req.body;
 
   try {
     const userFirebase = await createUserWithEmailAndPassword(
@@ -20,11 +19,15 @@ export const createUser = async (req: Request, res: Response) => {
       password
     );
 
+    const uuidv4 = v4();
+
     const user = await db
       .insert(users)
       .values({
-        username,
-        memberSince: new Date(),
+        id: uuidv4,
+        name: username,
+        email,
+        member_since: new Date(),
       })
       .returning();
 
@@ -64,9 +67,7 @@ export const logOut = async (req: Request, res: Response) => {
 };
 
 export const loginUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
-
-  const email = `${username}@gmail.com`;
+  const { email, password } = req.body;
 
   try {
     const userFirebase = await signInWithEmailAndPassword(
@@ -75,10 +76,7 @@ export const loginUser = async (req: Request, res: Response) => {
       password
     );
 
-    const user = await db
-      .select()
-      .from(users)
-      .where(eq(users.username, username));
+    const user = await db.select().from(users).where(eq(users.email, email));
 
     if (user.length == 0) {
       throw new Error("");

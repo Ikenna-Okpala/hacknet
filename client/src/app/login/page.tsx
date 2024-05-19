@@ -9,7 +9,7 @@ import { LOGIN_ENDPOINT } from "../utils/constants";
 import Link from "next/link";
 
 type Form = {
-  username: string;
+  email: string;
   password: string;
 };
 
@@ -19,7 +19,7 @@ type User = {
 };
 export default function Login() {
   const [form, setForm] = useState<Form>({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -41,11 +41,11 @@ export default function Login() {
       <input
         type="text"
         name="email"
-        value={form.username}
+        value={form.email}
         onChange={(e) => {
           setForm({
             ...form,
-            username: e.target.value,
+            email: e.target.value,
           });
         }}
         placeholder="Email"

@@ -85,12 +85,11 @@ export default function Home() {
 
 
     return (
-        <main className="flex flex-col justify-between items-center w-screen h-screen pt-12 pb-16"
-          style={({
-            backgroundImage: '/images/backgrounds/Cloudbackgroundanimation.gif',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-          })}>
+        <main className="flex flex-col justify-between items-center w-screen h-screen pt-12 pb-16">
+          <nav className="flex flex-col items-center space-y-8">
+          <img style={{position: 'absolute', zIndex: 0, top: '0px'}} src ="images/backgrounds/treesbg.png" width={1400} height={1300} />
+          </nav>
+          
           <nav className="absolute top-4 left-4">
             <button className="p-0 border-none bg-none">
               <Image src="/images/profile_icon/Profile1.png" alt="Profile" width={64} height={64} />
@@ -124,7 +123,7 @@ export default function Home() {
           <nav className="flex flex-col items-center space-y-8">
             <Image src="/animations/SquirrelAnimation.gif" alt="Fun background animation" width={400} height={300} />
             <button className="p-0 border-none bg-none" onClick={handleJoinAHackathonClick}>
-              <Image src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
+              <Image style={{position: 'absolute', zIndex: 1, top: '500px'}} src="/images/buttons/joinahackathon.png" alt="Join a Hackathon" width={192} height={64} />
             </button>
             <Popup isOpen={isQueuePopUpOpen} onClose={handleClosePartyInvitePopUp}>
               <HackathonQueuePopUp />

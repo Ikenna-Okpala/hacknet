@@ -1,9 +1,9 @@
-"use client";
+"use client"
 import exp from 'constants';
 import Image from 'next/image';
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import Popup from '../styles/popup';
 import PartyQueue from '../styles/partyQueue';
 import HackathonQueuePopUp from '../styles/hackathonQueuePopUp';
@@ -13,8 +13,30 @@ import { start } from 'repl';
 //import { insert } from 'drizzle-orm';
 import db from '../../../../server/src/db/db.config';
 import { HACKATHON_CREATE } from '../utils/constants';
+import FileDownload from 'js-file-download';
 
 export default function Home() {
+
+
+    async function uploadFile(file: File){
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await axios.post('http://localhost:3000/upload', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+    }
+
+    async function downloadFile(filename: string){
+        const response = await axios.get(`http://localhost:3000/download/${filename}`, {
+            responseType: 'blob',
+        });
+
+        FileDownload(response.data, filename);
+    }
+
     const handleProfileClick = () => {
         console.log("Profile button clicked");
     }
@@ -29,17 +51,18 @@ export default function Home() {
 
     async function handleJoinAHackathonClick() {
         console.log("Join a Hackathon button clicked");
+        window.open("localhost:3000/login", "_self");
         setQueuePopUpOpen(true);
         setLoading(true);
-        // const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
-        // const data = {
-        //     theme : selectedTheme,
-        //     startTime : new Date(),
-        //     endTime : new Date(),
-        //     max_participants : 10,
-        //     experience_level : 'Beginner',
-        // }
-        // await axios.post(HACKATHON_CREATE, data)
+        const selectedTheme = listOfThemes[Math.floor(Math.random() * listOfThemes.length)];
+        const data = {
+            theme : selectedTheme,
+            startTime : new Date(),
+            endTime : new Date(),
+            max_participants : 10,
+            experience_level : 'Beginner',
+        }
+        await axios.post(HACKATHON_CREATE, data)
         setLoading(false);
         console.log("Hackathon created");
     }
@@ -68,9 +91,9 @@ export default function Home() {
             </button>
           </nav>
           <nav className="absolute top-4 right-4">
-            <Link to="/user/friends">
+          <button className="p-0 border-none bg-none">
               <Image src="/images/buttons/connections.png" alt="Connections" width={64} height={64} />
-            </Link>
+            </button>
           </nav>
           <nav className="absolute top-1/2 right-4 transform -translate-y-1/2 flex flex-col items-end space-y-2">
             <div className="text-black">Party:</div>

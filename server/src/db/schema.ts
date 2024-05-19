@@ -1,5 +1,14 @@
 import { relations } from "drizzle-orm";
-import { pgTable, primaryKey, serial, text, timestamp, smallint, boolean, integer } from "drizzle-orm/pg-core";
+import {
+  pgTable,
+  primaryKey,
+  serial,
+  text,
+  timestamp,
+  smallint,
+  boolean,
+  integer,
+} from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: serial("id").notNull().primaryKey(),
@@ -23,34 +32,45 @@ export const hackathons = pgTable("hackathons", {
   third_place: text("third_place"),
 });
 
-export const friendslist = pgTable("friendslist", {
-  user_id: serial("user_id").notNull().references(() => users.id),
-  friend_id: serial("friend_id").references(() => users.id),
-},
-(t) => ({
-  pk: primaryKey({columns: [t.user_id, t.friend_id] }),
-}),
+export const friendslist = pgTable(
+  "friendslist",
+  {
+    user_id: serial("user_id")
+      .notNull()
+      .references(() => users.id),
+    friend_id: serial("friend_id")
+      .notNull()
+      .references(() => users.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.user_id, t.friend_id] }),
+  })
 );
 
-export const friend_request_list = pgTable("friend_requests", {
-  sender_id: serial("sender_id").references(() => users.id),
-  receiver_id: serial("receiver_id").references(() => users.id),
-},
-(t) => ({
-  pk: primaryKey({columns: [t.sender_id, t.receiver_id] }),
-}),
+export const friend_request_list = pgTable(
+  "friend_requests",
+  {
+    sender_id: serial("sender_id").references(() => users.id),
+    receiver_id: serial("receiver_id").references(() => users.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.sender_id, t.receiver_id] }),
+  })
 );
 
-export const user_profiles = pgTable("user_profiles", {
-  id: serial("id").notNull().primaryKey(),
-  favorite_project: text("favorite_project"),
-  bio: text("bio"),
-  jobStatus: text("job_status"),
-  user_id: serial("user_id").notNull().references(() => users.id),
-},
-(t) => ({
-  pk: primaryKey({columns: [t.user_id] }),
-}),
+export const user_profiles = pgTable(
+  "user_profiles",
+  {
+    id: serial("id").notNull().primaryKey(),
+    favorite_project: text("favorite_project"),
+    bio: text("bio"),
+    user_id: serial("user_id")
+      .notNull()
+      .references(() => users.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.user_id] }),
+  })
 );
 
 export const badges = pgTable("badges", {
@@ -60,39 +80,54 @@ export const badges = pgTable("badges", {
   icon: text("icon"),
 });
 
-export const user_badges = pgTable("user_badges", {
-  user_id: serial("user_id").notNull().references(() => users.id),
-  badge_id: serial("badge_id").notNull().references(() => badges.id),
-},
-(t) => ({
-  pk: primaryKey({columns: [t.user_id, t.badge_id] }),
-}),
+export const user_badges = pgTable(
+  "user_badges",
+  {
+    user_id: serial("user_id")
+      .notNull()
+      .references(() => users.id),
+    badge_id: serial("badge_id")
+      .notNull()
+      .references(() => badges.id),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.user_id, t.badge_id] }),
+  })
 );
 
 export const usersRelations = relations(users, ({ many }) => ({
   participant_to_hackathon: many(participant_to_hackathon),
 }));
 
-export const hackathonRelations = relations(hackathons, ({many}) => ({
+export const hackathonRelations = relations(hackathons, ({ many }) => ({
   participant_to_hackathon: many(participant_to_hackathon),
 }));
 
-export const participant_to_hackathon = pgTable("participant_to_hackathon", {
-  userId: smallint("userId").notNull().references(() => users.id),
-  hackathonId: smallint("hackathonId").notNull().references(() => hackathons.id),
+export const participant_to_hackathon = pgTable(
+  "participant_to_hackathon",
+  {
+    userId: smallint("userId")
+      .notNull()
+      .references(() => users.id),
+    hackathonId: smallint("hackathonId")
+      .notNull()
+      .references(() => hackathons.id),
   },
   (t) => ({
-    pk: primaryKey({columns: [t.userId, t.hackathonId] }),
-  }),
+    pk: primaryKey({ columns: [t.userId, t.hackathonId] }),
+  })
 );
 
-export const hackathon_participant_relations = relations(participant_to_hackathon, ({one}) => ({
-  user: one(users, {
-    fields: [participant_to_hackathon.userId],
-    references: [users.id],
-  }),
-  hackathon: one(hackathons, {
-    fields: [participant_to_hackathon.hackathonId],
-    references: [hackathons.id],
-  }),
-}));
+export const hackathon_participant_relations = relations(
+  participant_to_hackathon,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [participant_to_hackathon.userId],
+      references: [users.id],
+    }),
+    hackathon: one(hackathons, {
+      fields: [participant_to_hackathon.hackathonId],
+      references: [hackathons.id],
+    }),
+  })
+);

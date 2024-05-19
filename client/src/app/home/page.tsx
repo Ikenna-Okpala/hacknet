@@ -34,7 +34,7 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-screen bg-white flex flex-col items-center justify-center relative">
+        <main className="flex flex-col justify-between items-center w-screen h-screen pt-12 pb-16">
           <nav className="absolute top-4 left-4">
             <button className="p-0 border-none bg-none">
               <Image src="/images/profile_icon/Profile1.png" alt="Profile" width={64} height={64} />
